@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
     pgLast: document.getElementById("pg-last"),
     pgPageIndicator: document.getElementById("pg-page-indicator"),
     tooltip: document.getElementById("cave-tooltip"),
-    tooltipDimensao: document.getElementById("cave-tooltip-dimensao"),
     tooltipText: document.getElementById("cave-tooltip-text")
   };
 
@@ -1703,8 +1702,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!item) return;
 
-    dom.tooltipDimensao.textContent = item.dimensao ? "Dimensão " + item.dimensao + " • " + item.tema : "Pergunta do Questionário";
-    dom.tooltipText.textContent = item.nomeCompleto;
+    // Remove defensivamente qualquer elemento residual de cabeçalho do tooltip
+    const oldBadge = dom.tooltip ? dom.tooltip.querySelector(".cave-tooltip__badge, #cave-tooltip-dimensao") : null;
+    if (oldBadge) {
+      oldBadge.remove();
+    }
+
+    if (dom.tooltipText) {
+      dom.tooltipText.textContent = item.nomeCompleto;
+    }
 
     dom.tooltip.classList.add("cave-tooltip--visible");
     dom.tooltip.setAttribute("aria-hidden", "false");

@@ -1797,7 +1797,7 @@ window.CAVE_DATA = [
     q28_avaliacao_capacitacao: "Excelente",
     q29_disponibilidade_pessoal: "Alta",
     q30_mecanismo_continuidade: "Sim",
-    q31_fatores_erros_operacionais: "Falha humana",
+    q31_fatores_erros_operacionais: "Erro humano",
     q32_contratacoes_externas: "Auditoria independente",
     q33_valor_contratacoes: "R$ 45.435,00",
     q33_valor_contratacoes_num: 45435.00,
