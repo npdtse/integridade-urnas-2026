@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultoria CAVEs nas Eleições 2026</title>
+  
+  <!-- === [METADADOS & IDENTIDADE INSTITUCIONAL] === -->
+  <meta name="description" content="Painel Analítico do Diagnóstico das Comissões de Auditoria da Votação Eletrônica (CAVEs) para as Eleições 2026">
+  <meta name="author" content="Secretaria de Auditoria - TSE">
+  
+  <!-- === [FONTES GOOGLE & ÍCONES FONT AWESOME] === -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- === [FOLHA DE ESTILOS DO SISTEMA] === -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+
+  <!-- === [CABEÇALHO INSTITUCIONAL DA SPA] === -->
+  <header class="header">
+    <div class="header__brand">
+      <div class="header__logo-badge" aria-hidden="true">
+        <i class="fa-solid fa-person-booth"></i>
+      </div>
+      <div class="header__titles">
+        <span class="header__tag">RELATÓRIO DE CONSULTORIA</span>
+        <h1 class="header__title">
+          Atuação das Comissões de Auditoria da Votação Eletrônica nas Eleições 2026
+        </h1>
+      </div>
+    </div>
+
+    <div class="header__actions">
+
+      <button type="button" class="btn-theme-toggle" id="theme-toggle" aria-label="Alternar tema claro e escuro">
+        <i class="fa-solid fa-moon btn-theme-toggle__icon-dark" aria-hidden="true"></i>
+        <i class="fa-solid fa-sun btn-theme-toggle__icon-light" aria-hidden="true"></i>
+        <span class="btn-theme-toggle__text">Modo Escuro</span>
+      </button>
+
+      <button type="button" class="btn-mobile-filter" id="btn-open-mobile-filter" aria-label="Abrir filtros de pesquisa">
+        <i class="fa-solid fa-filter" aria-hidden="true"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- === [BARRA SUPERIOR DE NAVEGAÇÃO POR ABAS] === -->
+  <nav class="tabs-nav" aria-label="Navegação temática por abas">
+    <div class="tabs-nav__container">
+      <button type="button" class="tabs-nav__item tabs-nav__item--active" data-tab="tab-01" role="tab" aria-selected="true" aria-controls="view-tab-01">
+        <i class="fa-solid fa-house tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Panorama Nacional</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-02" role="tab" aria-selected="false" aria-controls="view-tab-02">
+        <i class="fa-solid fa-landmark tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Governança</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-03" role="tab" aria-selected="false" aria-controls="view-tab-03">
+        <i class="fa-solid fa-users-viewfinder tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Fiscalização</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-04" role="tab" aria-selected="false" aria-controls="view-tab-04">
+        <i class="fa-solid fa-truck tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Logística</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-05" role="tab" aria-selected="false" aria-controls="view-tab-05">
+        <i class="fa-solid fa-server tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Apoio à Votação Paralela</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-06" role="tab" aria-selected="false" aria-controls="view-tab-06">
+        <i class="fa-solid fa-user-gear tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Força de Trabalho</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-07" role="tab" aria-selected="false" aria-controls="view-tab-07">
+        <i class="fa-solid fa-chart-pie tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Maturidade de Dados</span>
+      </button>
+
+      <button type="button" class="tabs-nav__item" data-tab="tab-08" role="tab" aria-selected="false" aria-controls="view-tab-08">
+        <i class="fa-solid fa-table-cells tabs-nav__icon" aria-hidden="true"></i>
+        <span class="tabs-nav__label">Matriz Completa</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- === [ESTRUTURA PRINCIPAL: MENU LATERAL + CONTEÚDO] === -->
+  <div class="app-layout">
+    
+    <!-- --- [MENU LATERAL DE FILTROS] --- -->
+    <aside class="sidebar" id="sidebar" aria-label="Painel de filtros">
+      <div class="sidebar__header">
+        <div class="sidebar__title-box">
+          <i class="fa-solid fa-sliders sidebar__title-icon" aria-hidden="true"></i>
+          <h2 class="sidebar__title">Filtros de Pesquisa</h2>
+        </div>
+        <button type="button" class="sidebar__close-btn" id="btn-close-sidebar" aria-label="Fechar painel de filtros">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Filtros Globais Permanentes -->
+      <section class="sidebar__section">
+        <h3 class="sidebar__section-title sidebar__title-icon">Filtros Globais</h3>
+
+        <div class="form-group">
+          <label for="filter-regiao" class="form-label has-tooltip" data-field-key="tre">Macrorregião</label>
+          <select id="filter-regiao" class="form-select">
+            <option value="ALL">Todas as Regiões</option>
+            <option value="Norte">Norte</option>
+            <option value="Nordeste">Nordeste</option>
+            <option value="CentroOeste">Centro-Oeste</option>
+            <option value="Sudeste">Sudeste</option>
+            <option value="Sul">Sul</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filter-porte" class="form-label has-tooltip" data-field-key="secoes_estado">Porte do Tribunal</label>
+          <select id="filter-porte" class="form-select">
+            <option value="ALL">Todos os Portes</option>
+            <option value="Grande">Grande Porte (&gt; 30k seções)</option>
+            <option value="Médio">Médio Porte (10k a 30k)</option>
+            <option value="Pequeno">Pequeno Porte (&lt; 10k)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filter-uf" class="form-label has-tooltip" data-field-key="tre">Foco no Estado (UF)</label>
+          <select id="filter-uf" class="form-select">
+            <option value="ALL">Todos os 24 Tribunais</option>
+            <!-- Opções preenchidas dinamicamente via script.js -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filter-estudo-caso" class="form-label">Estudos de Caso</label>
+          <select id="filter-estudo-caso" class="form-select">
+            <option value="ALL">Todos os Tribunais</option>
+            <option value="ONLY">Apenas as 5 Capitais Visitadas (SP, TO, PE, DF, SC)</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn btn--outline btn--block" id="btn-reset-filters">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+          Limpar Todos os Filtros
+        </button>
+      </section>
+
+      <!-- Filtros Contextuais Dinâmicos (Alteram por Aba) -->
+      <section class="sidebar__section sidebar__section--contextual">
+        <div class="sidebar__contextual-header">
+          <h3 class="sidebar__section-title" id="contextual-filter-title">Filtros da Aba Ativa</h3>
+          <span class="sidebar__contextual-badge" id="contextual-tab-name">Geral</span>
+        </div>
+        <div id="contextual-filters-container">
+          <!-- Injetado dinamicamente via script.js -->
+        </div>
+      </section>
+
+      <div class="sidebar__footer-meta">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+        <span>Passe o cursor sobre os nomes reduzidos para exibir a pergunta original completa.</span>
+      </div>
+    </aside>
+
+    <!-- --- [ÁREA PRINCIPAL DE CONTEÚDO (SPA)] --- -->
+    <main class="main-content" id="main-content">
+
+      <!-- ======================================================== -->
+      <!-- ABA 01: VISÃO GERAL & MAPA DAS CAVEs                    -->
+      <!-- ======================================================== -->
+      <section class="tab-panel tab-panel--active" id="view-tab-01" role="tabpanel" aria-labelledby="tab-01">
+        
+        <!-- Scorecards de KPIs Gerais -->
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="secoes_estado">Total de seções eleitorais</span>
+              <i class="fa-solid fa-box-archive kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-total-secoes">0</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="urnas_auditadas_ultimo">Urnas auditadas no último pleito</span>
+              <i class="fa-solid fa-check-to-slot kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-urnas-ultimo">0</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="urnas_auditadas_2026">Previsão de urnas auditadas em 2026</span>
+              <i class="fa-solid fa-calendar-check kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-urnas-2026">0</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="urnas_bio_2026">Urnas com biometria a serem auditadas em 2026</span>
+              <i class="fa-solid fa-fingerprint kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-urnas-bio">0</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q33_valor_contratacoes">Contratações para apoio ao teste de integridade</span>
+              <i class="fa-solid fa-file-invoice-dollar kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-total-investido">R$ 0</div>
+          </article>
+        </div>
+
+        <!-- Painel Master-Detail: Navegador das 24 CAVEs + Dossiê Executivo -->
+        <div class="panorama-split">
+          
+          <!-- Coluna Esquerda: Navegador Seletor das 24 CAVEs -->
+          <article class="card caves-nav">
+            <div class="card__header">
+              <div class="caves-nav__title-row">
+                <div>
+                  <h3 class="card__title">Tribunais Regionais</h3>
+                </div>
+                <span class="caves-nav__counter" id="caves-nav-counter">24 Tribunais</span>
+              </div>
+              <p class="card__desc">Selecione um tribunal para projetar o dossiê executivo completo.</p>
+            </div>
+
+            <!-- Chips de Filtro por Macrorregião -->
+            <div class="caves-nav__region-chips" role="group" aria-label="Filtrar por macrorregião">
+              <button type="button" class="region-chip region-chip--active" data-region="ALL">Todas</button>
+              <button type="button" class="region-chip" data-region="Norte">Norte</button>
+              <button type="button" class="region-chip" data-region="Nordeste">Nordeste</button>
+              <button type="button" class="region-chip" data-region="Centro-Oeste">Centro-Oeste</button>
+              <button type="button" class="region-chip" data-region="Sudeste">Sudeste</button>
+              <button type="button" class="region-chip" data-region="Sul">Sul</button>
+            </div>
+
+            <!-- Lista Rolável dos 24 TREs -->
+            <div class="caves-nav__list" id="caves-nav-list" role="listbox" aria-label="Lista de tribunais disponíveis">
+              <!-- Preenchido dinamicamente via script.js -->
+            </div>
+          </article>
+
+          <!-- Coluna Direita: Dossiê Executivo da CAVE Selecionada -->
+          <article class="card caves-dossier" id="caves-executive-panel">
+            <div class="caves-dossier__header" id="caves-dossier-header">
+              <!-- Preenchido dinamicamente via script.js -->
+            </div>
+
+            <!-- 6 Pilares Temáticos Estruturados (1:1 com as Abas) -->
+            <div class="caves-dossier__pillars" id="caves-dossier-pillars">
+              <!-- Preenchido dinamicamente via script.js -->
+            </div>
+
+            <div class="caves-dossier__footer">
+              <button type="button" class="btn btn--primary btn--block" id="btn-open-full-dossier">
+                <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
+                Visualizar Detalhes
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 02: GOVERNANÇA, RISCOS E TRANSPARÊNCIA         -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="view-tab-02" role="tabpanel" aria-labelledby="tab-02">
+        <div class="panel-header">
+          <h2 class="panel-header__title">Governança, Riscos e Transparência</h2>
+          <p class="panel-header__desc">Avaliação da institucionalização formal, identificação prévia de controles e percepção de maturidade corporativa.</p>
+        </div>
+
+        <!-- KPIs de Governança -->
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q04_maturidade_governanca">Maturidade em governança</span>
+              <i class="fa-solid fa-crown kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-gov-alta-pct">0%</div>
+            <div class="kpi-card__meta">Avaliam como Alto ou Muito Alto</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q02_planejamento_formal">Planejamento formal dos testes</span>
+              <i class="fa-solid fa-clipboard-check kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-gov-plan-pct">0%</div>
+            <div class="kpi-card__meta">Possuem planejamento formalizado</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q01_unidade_resp">Unidade responsável pelos testes</span>
+              <i class="fa-solid fa-sitemap kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-gov-unidade-pct">0%</div>
+            <div class="kpi-card__meta">Com unidade formal dedicada</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q03_procedimento_sucessao">Procedimento de sucessão e conhecimento</span>
+              <i class="fa-solid fa-arrows-spin kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-gov-sucessao-pct">0%</div>
+            <div class="kpi-card__meta">Possuem transferência de conhecimento</div>
+          </article>
+        </div>
+
+        <!-- Gráficos de Governança -->
+        <div class="charts-grid charts-grid--2col">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q04_maturidade_governanca">Grau de Maturidade em Governança</h3>
+              <p class="chart-card__desc">Distribuição percentual da percepção de maturidade das CAVEs.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-gov-maturidade"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q07_riscos_criticos">Riscos Identificados</h3>
+              <p class="chart-card__desc">Ranking dos fatores de risco mais assinalados pelos tribunais.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-gov-riscos"></canvas>
+            </div>
+          </article>
+        </div>
+
+        <article class="chart-card chart-card--mt">
+          <div class="chart-card__header">
+            <h3 class="chart-card__title has-tooltip" data-field-key="q18_acoes_transparencia">Ações de Transparência Adotadas</h3>
+            <p class="chart-card__desc">Adesão às práticas de prestação de contas à sociedade (transmissão, releases, linguagem simples).</p>
+          </div>
+          <div class="chart-card__canvas-wrapper chart-card__canvas-wrapper--tall">
+            <canvas id="chart-gov-transparencia"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 03: FISCALIZAÇÃO                                     -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="view-tab-03" role="tabpanel" aria-labelledby="tab-03">
+        <div class="panel-header">
+          <h2 class="panel-header__title">Fiscalização</h2>
+          <p class="panel-header__desc">Comparecimento de entidades fiscalizadoras, partidos políticos e engajamento de voluntários.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q14_1_partidos_convidados">Convites feitos aos partidos para o sorteio</span>
+              <i class="fa-solid fa-envelope-open-text kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-partidos-convidados">0</div>
+            <div class="kpi-card__meta">Total nacional convidado</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q14_2_partidos_presentes">Presença dos partidos no sorteio</span>
+              <i class="fa-solid fa-user-check kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-partidos-presentes-sorteio">0</div>
+            <div class="kpi-card__meta" id="kpi-taxa-sorteio-partidos">Taxa de presença: 0%</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q14_5_partidos_execucao">Acompanhamento da execução pelos partidos</span>
+              <i class="fa-solid fa-person-chalkboard kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-partidos-execucao">0</div>
+            <div class="kpi-card__meta" id="kpi-taxa-execucao-partidos">Presença no dia da votação</div>
+          </article>
+
+          <article class="kpi-card kpi-card--mini-chart">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q10_meta_biometria">Estabelecimento de meta para biometria</span>
+              <i class="fa-solid fa-bullseye kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-mini-chart-layout">
+              <div class="kpi-mini-chart-canvas">
+                <canvas id="chart-mini-bio-meta"></canvas>
+              </div>
+              <div class="kpi-mini-chart-legend" id="kpi-mini-bio-legend">
+                <!-- Injetado dinamicamente via script.js -->
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="charts-grid charts-grid--2col">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title">Fiscalização Partidária</h3>
+              <p class="chart-card__desc">Comparativo entre legendas convidadas, presentes no sorteio e presentes na execução.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-funil-partidos"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title">Participação das Demais Entidades Fiscalizadoras</h3>
+              <p class="chart-card__desc">Adesão de OAB, Ministério Público, Forças Armadas e entidades técnicas.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-funil-entidades"></canvas>
+            </div>
+          </article>
+        </div>
+
+        <div class="charts-grid charts-grid--2col charts-grid--mt">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q12_dificuldade_voluntarios_bio">Dificuldade para Obtenção de Voluntários</h3>
+              <p class="chart-card__desc">Percepção das CAVEs sobre a adesão de eleitores no dia do teste.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-bio-dificuldade"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q16_fatores_dificultam_entidades">Fatores que Dificultam a Participação de Fiscais</h3>
+              <p class="chart-card__desc">Principais motivos relatados para ausência de partidos e entidades.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-fatores-fiscais"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 04: LOGÍSTICA                                        -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="view-tab-04" role="tabpanel" aria-labelledby="tab-04">
+        <div class="panel-header">
+          <h2 class="panel-header__title">Logística</h2>
+          <p class="panel-header__desc">Cadeia de custódia, salvaguardas de transporte de urnas, estratégias de substituição e contratações.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q21_ocorrencia_logistica">Ocorrência logística relevante</span>
+              <i class="fa-solid fa-triangle-exclamation kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-logistica-ocorrencias">0</div>
+            <div class="kpi-card__meta">Tribunais com incidentes logísticos</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q23_estrategia_substituicao_urnas">Estratégia prévia para substituição de urnas</span>
+              <i class="fa-solid fa-route kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-logistica-contingencia-pct">0%</div>
+            <div class="kpi-card__meta">Possuem plano de contingência</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q26_distribuicao_regional_secoes">Critério de distribuição regional das seções</span>
+              <i class="fa-solid fa-earth-americas kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-logistica-regional-pct">0%</div>
+            <div class="kpi-card__meta">Garantem representação por macrorregião</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q33_valor_contratacoes">Valor Total das Contratações</span>
+              <i class="fa-solid fa-file-invoice-dollar kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-custo-medio-urna">R$ 0</div>
+            <div class="kpi-card__meta">Total investido nos testes de integridade</div>
+          </article>
+        </div>
+
+        <article class="chart-card">
+          <div class="chart-card__header">
+            <h3 class="chart-card__title has-tooltip" data-field-key="q20_controles_transporte">Controles na Cadeia de Custódia e Transporte</h3>
+            <p class="chart-card__desc">Percentual de TREs que adotam cada medida de salvaguarda física e documental.</p>
+          </div>
+          <div class="chart-card__canvas-wrapper chart-card__canvas-wrapper--tall">
+            <canvas id="chart-logistica-controles"></canvas>
+          </div>
+        </article>
+
+        <div class="charts-grid charts-grid--2col charts-grid--mt">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q33_valor_contratacoes">Ranking de Investimento em Contratações por Tribunal</h3>
+              <p class="chart-card__desc">Valores totais de contratações externas ordenados por estado.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper chart-card__canvas-wrapper--tall">
+              <canvas id="chart-custo-dispersao"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q25_fatores_exclusao_secoes">Fatores Considerados para Exclusão de Seções</h3>
+              <p class="chart-card__desc">Restrições geográficas, climáticas e de segurança física.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-exclusao-secoes"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 05: SISTEMAS, CONTINGÊNCIA & EVIDÊNCIAS             -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="view-tab-05" role="tabpanel" aria-labelledby="tab-05">
+        <div class="panel-header">
+          <h2 class="panel-header__title">Sistema de Apoio à Votação Paralela (SAVP)</h2>
+          <p class="panel-header__desc">Avaliação do sistema de apoio, de falhas de transmissão ou gravação e do apoio oferecido pelo TSE.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q36_falhas_savp">Falhas relevantes observadas no SAVP</span>
+              <i class="fa-solid fa-microchip kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-savp-falhas">0</div>
+            <div class="kpi-card__meta">Tribunais com instabilidade no sistema</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q37_falhas_gravacao">Falhas na gravação da votação</span>
+              <i class="fa-solid fa-video-slash kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-gravacao-falhas">0</div>
+            <div class="kpi-card__meta">Registros de perda parcial ou falha</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q38_falhas_transmissao">Falhas na transmissão pública</span>
+              <i class="fa-solid fa-tower-broadcast kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-transmissao-falhas">0</div>
+            <div class="kpi-card__meta">Instabilidade em lives no pleito</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q44_utilidade_modelos_tse">Utilidade dos modelos e manuais do TSE</span>
+              <i class="fa-solid fa-book-bookmark kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-tse-modelos-pct">0%</div>
+            <div class="kpi-card__meta">Avaliam como Alta ou Muito Alta</div>
+          </article>
+        </div>
+
+        <div class="charts-grid charts-grid--2col">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title">Avaliação do Apoio</h3>
+              <p class="chart-card__desc">Percepção quanto a clareza, tempestividade, disponibilidade e suporte.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-suporte-tse"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q39_contingencia_tecnologica">Mecanismos de Contingência Tecnológica Disponíveis</h3>
+              <p class="chart-card__desc">Redundância energética, computadores reserva e gravação paralela.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-contingencia-tec"></canvas>
+            </div>
+          </article>
+        </div>
+
+        <article class="chart-card chart-card--mt">
+          <div class="chart-card__header">
+            <h3 class="chart-card__title has-tooltip" data-field-key="q35_aspectos_melhoria_savp">Oportunidades de Aprimoramento</h3>
+            <p class="chart-card__desc">Demandas de melhoria apontadas pelas equipes para as Eleições 2026.</p>
+          </div>
+          <div class="chart-card__canvas-wrapper">
+            <canvas id="chart-savp-melhorias"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 06: PESSOAS, EQUIPES & CAPACITAÇÃO                  -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="view-tab-06" role="tabpanel" aria-labelledby="tab-06">
+        <div class="panel-header">
+          <h2 class="panel-header__title">Força de Trabalho</h2>
+          <p class="panel-header__desc">Composição das equipes, dimensionamento de mesas de votação e fatores de erros operacionais.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q47_3_auxiliares_auditoria">Auxiliares de auditoria envolvidos</span>
+              <i class="fa-solid fa-users kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-total-auxiliares">0</div>
+            <div class="kpi-card__meta">Total mobilizado no Brasil</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q48_pessoas_por_mesa">Média de pessoas por mesa de trabalho</span>
+              <i class="fa-solid fa-chair kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-media-pessoas-mesa">0</div>
+            <div class="kpi-card__meta">Operadores por ilha de votação</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q28_avaliacao_capacitacao">Avaliação da capacitação das equipes</span>
+              <i class="fa-solid fa-graduation-cap kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-capacitacao-pct">0%</div>
+            <div class="kpi-card__meta">Consideram Excelente ou Boa</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q60_fadiga_operacional">Monitoramento de fadiga operacional</span>
+              <i class="fa-solid fa-heart-pulse kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-fadiga-pct">0%</div>
+            <div class="kpi-card__meta">Monitoram cansaço das equipes</div>
+          </article>
+        </div>
+
+        <div class="charts-grid charts-grid--2col">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title">Distribuição da Força de Trabalho por Função</h3>
+              <p class="chart-card__desc">Média de integrantes por categoria em cada tribunal.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-forca-trabalho"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q31_fatores_erros_operacionais">Fatores que Contribuem para Erros Operacionais</h3>
+              <p class="chart-card__desc">Causas de desatenção, repetitividade e prazos curtos.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-erros-operacionais"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 07: MATURIDADE DE DADOS & MÉTRICAS                  -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="view-tab-07" role="tabpanel" aria-labelledby="tab-07">
+        <div class="panel-header">
+          <h2 class="panel-header__title">Maturidade de Dados</h2>
+          <p class="panel-header__desc">Existência de séries históricas, monitoramento de produtividade e registros estatísticos estruturados.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q50_bases_estruturadas">Manutenção de bases estruturadas e painéis</span>
+              <i class="fa-solid fa-database kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-dados-estruturados-pct">0%</div>
+            <div class="kpi-card__meta">Mantêm painéis ou bancos estruturados</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q52_serie_historica">Manutenção de série histórica dos testes</span>
+              <i class="fa-solid fa-timeline kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-dados-historico-pct">0%</div>
+            <div class="kpi-card__meta">Possuem série de múltiplos pleitos</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q55_produtividade_equipes">Acompanhamento da produtividade das equipes</span>
+              <i class="fa-solid fa-stopwatch-20 kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-dados-produtividade-pct">0%</div>
+            <div class="kpi-card__meta">Acompanham produtividade</div>
+          </article>
+
+          <article class="kpi-card">
+            <div class="kpi-card__header">
+              <span class="kpi-card__label has-tooltip" data-field-key="q64_analise_periodica">Análise periódica de tendências e melhorias</span>
+              <i class="fa-solid fa-magnifying-glass-chart kpi-card__icon" aria-hidden="true"></i>
+            </div>
+            <div class="kpi-card__value" id="kpi-dados-tendencias-pct">0%</div>
+            <div class="kpi-card__meta">Realizam ciclo de lições aprendidas</div>
+          </article>
+        </div>
+
+        <div class="charts-grid charts-grid--2col">
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title">Maturidade de Gestão por Dados nas CAVEs</h3>
+              <p class="chart-card__desc">Adoção de métricas formais, classificação de erros e dimensionamento orientado a dados.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-maturidade-dados"></canvas>
+            </div>
+          </article>
+
+          <article class="chart-card">
+            <div class="chart-card__header">
+              <h3 class="chart-card__title has-tooltip" data-field-key="q54_registros_estatisticos">Aspectos com Registros Estatísticos Consolidados</h3>
+              <p class="chart-card__desc">Áreas em que os TREs mantêm medições estruturadas.</p>
+            </div>
+            <div class="chart-card__canvas-wrapper">
+              <canvas id="chart-registros-consolidados"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- ABA 08: MATRIZ COMPLETA DE DADOS (VISÃO IMERSIVA)       -->
+      <!-- ======================================================== -->
+      <section class="tab-panel tab-panel--fullscreen" id="view-tab-08" role="tabpanel" aria-labelledby="tab-08">
+        
+        <!-- Barra de Ações Superior da Matriz -->
+        <div class="matrix-action-bar">
+          <div class="matrix-action-bar__left">
+            <button type="button" class="btn btn--outline btn--sm" id="btn-toggle-sidebar" title="Recolher ou expandir o menu lateral de filtros">
+              <i class="fa-solid fa-arrows-left-right-to-line" aria-hidden="true"></i>
+              <span id="btn-toggle-sidebar-text">Ocultar Filtros</span>
+            </button>
+          </div>
+
+          <div class="matrix-action-bar__right">
+            <span class="matrix-counter" id="table-records-counter">24 tribunais</span>
+            <button type="button" class="btn btn--primary btn--sm" id="btn-export-csv" title="Exportar todas as respostas filtradas em formato CSV">
+              <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+              Exportar CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Grade de Dados Imersiva com Duplo Congelamento (Sticky) -->
+        <div class="table-fullscreen-container" id="table-scroll-container">
+          <table class="data-table data-table--dense" id="cave-data-table" aria-label="Matriz completa com todas as respostas do diagnóstico CAVE">
+            <thead id="data-table-head">
+              <!-- Renderizado dinamicamente via script.js -->
+            </thead>
+            <tbody id="data-table-body">
+              <!-- Renderizado dinamicamente via script.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- === [RODAPÉ INSTITUCIONAL] === -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__brand">
+        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+        <span>Tribunal Superior Eleitoral • Secretaria de Auditoria (SAU)</span>
+      </div>
+      <div class="footer__note">
+        <span>Resolução TSE nº 23.673/2021 • Portaria TSE nº 478/2026 • Auditoria e Fiscalização do Sistema Eletrônico de Votação</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- === [MODAL / BOTTOM SHEET: DOSSIÊ RAIO-X DO TRE] === -->
+  <div class="modal-backdrop" id="dossier-modal" aria-hidden="true" role="dialog" aria-labelledby="dossier-modal-title">
+    <div class="modal" role="document">
+      <header class="modal__header">
+        <div class="modal__title-group">
+          <div class="modal__badge-box">
+            <span class="modal__uf-badge" id="modal-tre-uf">SP</span>
+            <span class="modal__tag" id="modal-tre-tipo">Estudo de Caso</span>
+          </div>
+          <h2 class="modal__title" id="dossier-modal-title">Tribunal Regional Eleitoral de São Paulo</h2>
+          <span class="modal__subtitle" id="modal-tre-meta">Região Sudeste • Grande Porte (103.405 seções)</span>
+        </div>
+        <button type="button" class="modal__close-btn" id="btn-close-modal" aria-label="Fechar dossiê">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="modal__body" id="modal-dossier-content">
+        <!-- Estrutura preenchida dinamicamente via script.js -->
+      </div>
+
+      <footer class="modal__footer">
+        <button type="button" class="btn btn--outline" id="btn-close-modal-footer">Fechar</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- === [MICRO-TOOLTIP FLUTUANTE (NOME REDUZIDO X NOME COMPLETO)] === -->
+  <div id="cave-tooltip" class="cave-tooltip" role="tooltip" aria-hidden="true">
+    <div class="cave-tooltip__inner">
+      <span class="cave-tooltip__badge" id="cave-tooltip-dimensao">Pergunta Oficial</span>
+      <p class="cave-tooltip__text" id="cave-tooltip-text">Pergunta original completa...</p>
+    </div>
+  </div>
+
+  <!-- === [SCRIPTS: CDNs EXTERNAS E ARQUIVOS DO PROJETO] === -->
+  <!-- Chart.js para Visualização de Dados -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- GSAP para Transições Suaves da SPA -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Base de Dados Sanitizada e Dicionário de Campos (Sem servidor/CORS) -->
+  <script src="data.js"></script>
+
+  <!-- Lógica da Aplicação, Filtros, Gráficos e Interatividades -->
+  <script src="script.js"></script>
+
+</body>
+</html>
